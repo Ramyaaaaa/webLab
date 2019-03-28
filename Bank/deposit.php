@@ -2,13 +2,13 @@
 include('session.php');
 include('config.php');
 if($_SERVER['REQUEST_METHOD'] == "POST")    {
-    $amt = $_POST['amt'];
+    $amt = (int)$_POST['amt'];
         
     $sql = "select bal from login where uname = '$login_session'";
     $res = $conn->query($sql);
     $row = $res->fetch_assoc();
-    $curBal =$row['bal'];
-    $sql = "UPDATE login set bal = '$curBal + $amt' where uname = '$login_session'";
+    $curBal = (int)$row['bal'] + $amt;
+    $sql = "UPDATE login set bal = '$curBal' where uname = '$login_session'";
     if($conn->query($sql) == TRUE)  {
         echo "Amount Sucessfully deposited <h1>THANK YOU </h1>";
         // header("location : welcome.php");
